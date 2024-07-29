@@ -13,7 +13,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Build the project
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      working-directory: ./github-service
+
+    - name: Build with Gradle
       run: ./gradlew build
       working-directory: ./github-service
 
