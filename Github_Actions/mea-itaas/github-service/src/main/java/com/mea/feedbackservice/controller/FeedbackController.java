@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeedbackController {
     @GetMapping("/test")
     public ResponseEntity<String> test(HttpServletRequest request) {
-        return new ResponseEntity<String>("Feedback Service is UPP & CICD implemented!!!!",HttpStatus.OK);
+        return new ResponseEntity<String>("Feedback Service is UPP & CICD implemented!",HttpStatus.OK);
     }
 }
