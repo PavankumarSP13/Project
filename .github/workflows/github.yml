@@ -43,9 +43,9 @@ jobs:
             JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
             
             # Find and kill the existing process
-            PID=$(sudo -S lsof -t -i :$PORT <<< 'infotech@123')
+            PID=$(sudo -S lsof -t -i :$PORT <<< ${{ secrets.BACKEND_SERVER_PASSWORD }})
             if [ -n "$PID" ]; then
-              echo "Killing process $PID running on port $PORT"
+              echo "Killing process $PID running on port ${{ secrets.FEEDBACK_SERVICE_PORT }}"
               echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S kill -9 $PID
             else
               echo "No process found running on port $PORT"
@@ -53,4 +53,4 @@ jobs:
             
             # Run the new JAR file
             echo "Starting new JAR file"
-            echo 'infotech@123' | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
+            echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
