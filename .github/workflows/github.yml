@@ -43,6 +43,8 @@ jobs:
             
             # Find and kill the existing process
             PID=$(sudo lsof -t -i :$PORT)
+            cat "process-id= $PID"
+            echo "Killing process $PID running on port $PORT"
             if [ -n "$PID" ]; then
               echo "Killing process $PID running on port $PORT"
               sudo kill -9 $PID
