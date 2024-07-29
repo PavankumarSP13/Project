@@ -1,0 +1,24 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build the project
+      run: ./gradlew build
+      working-directory: ./github-service
+
+    - name: Deploy the JAR locally
+      run: cp build/libs/emailblast-service-0.1.0.jar /path/to/deployment/directory
+
+    - name: Run JAR
+      run: java -jar /path/to/deployment/directory/emailblast-service-0.1.0.jar
