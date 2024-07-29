@@ -34,23 +34,27 @@ jobs:
       run: cp ./Github_Actions/mea-itaas/github-service/build/libs/feedback-service-0.1.0.jar /home/tricon/helloSignUpgradedJars
 
     - name: Execute deployment script on server
+      env:
+       BACKEND_SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
+       BACKEND_SERVER_PASSWORD: ${{ secrets.BACKEND_SERVER_PASSWORD }}
+       FEEDBACK_SERVICE_PORT: ${{ secrets.FEEDBACK_SERVICE_PORT }}
       run: |
-            sshpass -p 'infotech@123' ssh -o StrictHostKeyChecking=no tricon@172.23.97.203 << 'EOF'
+            sshpass -p "${ secrets.BACKEND_SERVER_PASSWORD }" ssh -o StrictHostKeyChecking=no tricon@{ secrets.BACKEND_SERVER_IP } << 'EOF'
             # Define variables
-            PORT=3010
+            PORT=${FEEDBACK_SERVICE_PORT}
             JAR_PATH="/home/tricon/helloSignUpgradedJars/feedback-service-0.1.0.jar"
             LOG_PATH="/home/tricon/logs/feedback-service/feedback-service.out"
             JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
             
             # Find and kill the existing process
-            PID=$(sudo -S lsof -t -i :$PORT <<< 'infotech@123')
+            PID=$(echo $BACKEND_SERVER_PASSWORD | sudo -S lsof -t -i :$PORT)
             if [ -n "$PID" ]; then
               echo "Killing process $PID running on port $PORT"
-              echo 'infotech@123' | sudo -S kill -9 $PID
+              echo $BACKEND_SERVER_PASSWORD | sudo -S kill -9 $PID
             else
               echo "No process found running on port $PORT"
             fi
             
             # Run the new JAR file
             echo "Starting new JAR file"
-            echo 'infotech@123' | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
+            echo $BACKEND_SERVER_PASSWORD | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
