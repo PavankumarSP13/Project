@@ -27,5 +27,8 @@ jobs:
       working-directory: ./Github_Actions/mea-itaas/github-service
 
 
-    - name: Deploy the JAR locally
-      run: cp build/libs/feedback-service-0.1.0.jar /home/tricon/helloSignUpgradedJars
+    - name: List build directory contents
+      run: ls -al ./Github_Actions/mea-itaas/github-service/build/libs
+
+    - name: Copy JAR to target directory
+      run: cp ./Github_Actions/mea-itaas/github-service/build/libs/feedback-service-0.1.0.jar /home/tricon/helloSignUpgradedJars
