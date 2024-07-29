@@ -35,14 +35,14 @@ jobs:
 
     - name: Execute deployment script on server
       run: |
-            sshpass -p 'your_ssh_password' ssh -o StrictHostKeyChecking=no tricon@172.23.97.203 << 'EOF'
+            sshpass -p 'infotech@123' ssh -o StrictHostKeyChecking=no tricon@172.23.97.203 << 'EOF'
             # Define variables
             PORT=3010
             JAR_PATH="/home/tricon/helloSignUpgradedJars/feedback-service-0.1.0.jar"
             LOG_PATH="/home/tricon/logs/feedback-service/feedback-service.out"
             
             # Find and kill the existing process
-            PID=$(sudo -S lsof -t -i :$PORT <<< 'your_sudo_password')
+            PID=$(sudo -S lsof -t -i :$PORT <<< 'infotech@123')
             cat "process-id= $PID"
             echo "Killing process $PID running on port $PORT"
             if [ -n "$PID" ]; then
