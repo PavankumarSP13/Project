@@ -43,7 +43,7 @@ jobs:
             JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
             
             # Find and kill the existing process
-            PID=$(sudo -S lsof -t -i :$PORT <<< ${{ secrets.BACKEND_SERVER_PASSWORD }})
+            PID=$(sudo -S lsof -t -i :${{ secrets.FEEDBACK_SERVICE_PORT }}<<< ${{ secrets.BACKEND_SERVER_PASSWORD }})
             if [ -n "$PID" ]; then
               echo "Killing process $PID running on port ${{ secrets.FEEDBACK_SERVICE_PORT }}"
               echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S kill -9 $PID
