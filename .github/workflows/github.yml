@@ -19,13 +19,13 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    - name: Make gradlew executable
-      run: chmod +x gradlew
-      working-directory: ./github-service
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./Github_Actions/mea-itaas/github-service/gradlew
 
-    - name: Build with Gradle
+    - name: Build the project
       run: ./gradlew build
-      working-directory: ./github-service
+      working-directory: ./Github_Actions/mea-itaas/github-service
+
 
     - name: Deploy the JAR locally
       run: cp build/libs/feedback-service-0.1.0.jar /home/tricon/helloSignUpgradedJars
