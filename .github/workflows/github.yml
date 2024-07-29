@@ -35,6 +35,7 @@ jobs:
 
     - name: Execute deployment script on server
       run: |
+            ssh tricon@172.23.97.203 << 'EOF'
             # Define variables
             PORT=3010
             JAR_PATH="/home/tricon/helloSignUpgradedJars/feedback-service-0.1.0.jar"
