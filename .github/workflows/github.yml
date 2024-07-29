@@ -35,7 +35,7 @@ jobs:
 
     - name: Execute deployment script on server
       run: |
-            sshpass -p ${{ secrets.BACKEND_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no tricon@ ${ secrets.BACKEND_SERVER_IP } << 'EOF'
+            sshpass -p ${{ secrets.BACKEND_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no tricon@ ${{ secrets.BACKEND_SERVER_IP }} << 'EOF'
             
             # Path variables
             JAR_PATH="/home/tricon/helloSignUpgradedJars/feedback-service-0.1.0.jar"
