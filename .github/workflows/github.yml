@@ -43,11 +43,9 @@ jobs:
             
             # Find and kill the existing process
             PID=$(sudo -S lsof -t -i :$PORT <<< 'infotech@123')
-            cat "process-id= $PID"
-            echo "Killing process $PID running on port $PORT"
             if [ -n "$PID" ]; then
               echo "Killing process $PID running on port $PORT"
-              sudo kill -9 $PID
+              sudo kill -9 $PID <<< 'infotech@123'
             else
               echo "No process found running on port $PORT"
             fi
