@@ -52,4 +52,4 @@ jobs:
             
             # Run the new JAR file
             echo "Starting new JAR file"
-            nohup java -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
+            echo 'infotech@123' | sudo -S nohup java -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
