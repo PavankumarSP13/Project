@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - dev
+      - development
   pull_request:
     branches:
       - main
-      - dev
+      - development
       
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
   deploy_to_dev:
     runs-on: self-hosted
     needs: build
-    if: github.ref == 'refs/heads/dev' || github.event.pull_request.base.ref == 'dev'
+    if: github.ref == 'refs/heads/development' || github.event.pull_request.base.ref == 'development'
 
     steps:
     - name: Download build artifacts
