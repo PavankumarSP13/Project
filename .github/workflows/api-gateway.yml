@@ -34,7 +34,7 @@ jobs:
 
 
     - name: List build directory contents
-      run: ls -al ./Github_Actions/mea-itaas/github-service/build/libs
+      run: ls -al ./Github_Actions/mea-itaas/api-gateway/build/libs
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
