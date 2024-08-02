@@ -26,11 +26,11 @@ jobs:
         java-version: '17'
 
     - name: Grant execute permission for gradlew
-      run: chmod +x ./Github_Actions/mea-itaas/github-service/gradlew
+      run: chmod +x ./Github_Actions/mea-itaas/api-gateway/gradlew
 
     - name: Build the project
       run: ./gradlew build
-      working-directory: ./Github_Actions/mea-itaas/github-service
+      working-directory: ./Github_Actions/mea-itaas/api-gateway
 
 
     - name: List build directory contents
