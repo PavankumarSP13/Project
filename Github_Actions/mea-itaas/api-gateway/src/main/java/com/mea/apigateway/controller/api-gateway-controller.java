@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeedbackController {
 
     @GetMapping("/test")
-    public ResponseEntity<String> test(HttpServletRequest request) {
-        return new ResponseEntity<String>("API-Gateway Dev Service is UP & CICD implemented!!!",HttpStatus.OK);
+    public String test( ) {
+        return "API-Gateway Service is UP & CICD implemented!!!";
     }
 }
