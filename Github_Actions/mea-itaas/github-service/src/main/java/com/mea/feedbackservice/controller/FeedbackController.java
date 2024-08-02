@@ -13,6 +13,6 @@ public class FeedbackController {
 
     @GetMapping("/test")
     public ResponseEntity<String> test(HttpServletRequest request) {
-        return new ResponseEntity<String>("Feedback Dev Service is UP & CICD implemented!!!",HttpStatus.OK);
+        return new ResponseEntity<String>("Feedback Prod Service is UP & CICD implemented!!!",HttpStatus.OK);
     }
 }
