@@ -59,8 +59,26 @@ jobs:
     - name: Execute deployment script on dev server
       run: |
             sshpass -p ${{ secrets.BACKEND_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.BACKEND_USER }}@${{ secrets.DEV_SERVER_IP }} << 'EOF'
-            # Same deployment script as before
+             
+            # Path variables
+            JAR_PATH="/home/tricon/helloSign_Upgraded_ProductionJars/feedback-service-0.1.0.jar"
+            LOG_PATH="/home/tricon/logs/feedback-service/feedback-service.out"
+            JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
+            
+            # Find and kill the existing process
+            PID=$(sudo -S lsof -t -i :${{ secrets.FEEDBACK_SERVICE_PORT }}<<< ${{ secrets.BACKEND_SERVER_PASSWORD }})
+            if [ -n "$PID" ]; then
+              echo "Killing process $PID running on port ${{ secrets.FEEDBACK_SERVICE_PORT }}"
+              echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S kill -9 $PID
+            else
+              echo "No process found running on port $PORT"
+            fi
+            
+            # Run the new JAR file
+            echo "Starting new JAR file"
+            echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=dev -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
             EOF
+          
 
   deploy_to_prod:
     runs-on: self-hosted
@@ -74,10 +92,27 @@ jobs:
         name: build-artifact
 
     - name: Copy JAR to target directory
-      run: cp ./feedback-service-0.1.0.jar /home/tricon/helloSignUpgradedProductionJars
+      run: cp ./feedback-service-0.1.0.jar /home/tricon/helloSign_Upgraded_ProductionJars
 
     - name: Execute deployment script on prod server
       run: |
             sshpass -p ${{ secrets.BACKEND_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.BACKEND_USER }}@${{ secrets.PROD_BACKEND_SERVER_IP }} << 'EOF'
-            # Same deployment script as before
+            
+            # Path variables
+            JAR_PATH="/home/tricon/helloSign_Upgraded_ProductionJars/feedback-service-0.1.0.jar"
+            LOG_PATH="/home/tricon/logs/feedback-service/feedback-service.out"
+            JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
+            
+            # Find and kill the existing process
+            PID=$(sudo -S lsof -t -i :${{ secrets.FEEDBACK_SERVICE_PORT }}<<< ${{ secrets.BACKEND_SERVER_PASSWORD }})
+            if [ -n "$PID" ]; then
+              echo "Killing process $PID running on port ${{ secrets.FEEDBACK_SERVICE_PORT }}"
+              echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S kill -9 $PID
+            else
+              echo "No process found running on port $PORT"
+            fi
+            
+            # Run the new JAR file
+            echo "Starting new JAR file"
+            echo ${{ secrets.BACKEND_SERVER_PASSWORD }} | sudo -S nohup $JAVA_PATH -jar -Dspring.profiles.active=prod -Djsse.enableCBCProtection=false $JAR_PATH > $LOG_PATH 2>&1 &
             EOF
