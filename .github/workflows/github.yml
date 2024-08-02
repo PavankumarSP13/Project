@@ -61,7 +61,7 @@ jobs:
             sshpass -p ${{ secrets.BACKEND_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_SERVER_IP }} << 'EOF'
              
             # Path variables
-            JAR_PATH="/home/tricon/helloSign_Upgraded_ProductionJars/feedback-service-0.1.0.jar"
+            JAR_PATH="/home/tricon/helloSignUpgradedJars/feedback-service-0.1.0.jar"
             LOG_PATH="/home/tricon/logs/feedback-service/feedback-service.out"
             JAVA_PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
             
