@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/feedback-service")
 public class FeedbackController {
+
     @GetMapping("/test")
     public ResponseEntity<String> test(HttpServletRequest request) {
-        return new ResponseEntity<String>("Feedback Service is UP & CICD implemented!!!",HttpStatus.OK);
+        return new ResponseEntity<String>("Feedback Prod Service is UP & CICD implemented!!!",HttpStatus.OK);
     }
 }
