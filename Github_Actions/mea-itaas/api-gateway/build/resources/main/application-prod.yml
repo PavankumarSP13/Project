@@ -1,0 +1,44 @@
+server:
+  port: 3002
+
+# Define routes for Spring Cloud Gateway
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: emailblast-service-route
+          uri: http://172.23.97.93:3004
+          predicates:
+            - Path=/api/emailblast-service/**
+        - id: audit-service-route
+          uri: http://172.23.97.93:3009
+          predicates:
+            - Path=/api/audit-service/**
+        - id: clinical-service-route
+          uri: http://172.23.97.93:3006
+          predicates:
+            - Path=/api/clinical-service/**
+        - id: mailer-service-route
+          uri: http://172.23.97.93:3007
+          predicates:
+            - Path=/api/mailer-service/**
+        - id: feedback-service-route
+          uri: http://172.23.97.93:3010
+          predicates:
+            - Path=/api/feedback-service/**
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://172.23.97.95:3003/eureka/
+  instance:
+    hostname: 172.23.97.95
+logging:
+  file: ${HOME}/logs/api-gateway/apigateway.log
+auditServiceURL: http://172.23.97.93:3009/api/audit-service/audit
+logoutURL: http://172.23.97.93:3004/api/emailblast-service/logout
+loggedInSessionURL: http://172.23.97.93:3004/api/emailblast-service/loggedInSession

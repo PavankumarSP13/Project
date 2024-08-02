@@ -1,0 +1,52 @@
+server:
+  port: 3002
+
+# Define routes for Spring Cloud Gateway
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: emailblast-service-route
+          uri: http://localhost:3004
+          predicates:
+            - Path=/api/emailblast-service/**
+        - id: audit-service-route
+          uri: http://localhost:3009
+          predicates:
+            - Path=/api/audit-service/**
+        - id: clinical-service-route
+          uri: http://localhost:3006
+          predicates:
+            - Path=/api/clinical-service/**
+        - id: mailer-service-route
+          uri: http://localhost:3007
+          predicates:
+            - Path=/api/mailer-service/**
+        - id: feedback-service-route
+          uri: http://localhost:3010
+          predicates:
+            - Path=/api/feedback-service/**
+
+      #CORS Configuration:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:3003/eureka/
+  instance:
+    hostname: localhost
+
+logoutURL: http://localhost:3004/api/emailblast-service/logout
+loggedInSessionURL: http://localhost:3004/api/emailblast-service/loggedInSession

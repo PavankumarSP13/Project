@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: 3002
+
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    emailblast-service:
+      path: /emailblast-service/**
+      serviceId: emailblast-service
+      #url: http://localhost:3004
+    campus-service:
+      path: /campus-service/**
+      url: http://localhost:3005
+    clinical-service:
+      path: /clinical-service/**
+      serviceId: clinical-service
+      #url: http://localhost:3006
+    mailer-service:
+      path: /mailer-service/**
+      #url: http://localhost:3007
+    feedback-service:
+      path: /feedback-service/**
+      #url: http://localhost:3010
+    audit-service:
+      path: /audit-service/**
+  host:
+      connect-timeout-millis: 60000 # starting the connection
+      socket-timeout-millis: 60000  # monitor the continuous incoming data flow
+
+#hystrix:
+  #command:
+    #default:
+      #execution:
+        #isolation:
+          #strategy: THREAD
+          #thread:
+            #timeoutInMilliseconds: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:3003/eureka/
+  instance:
+    hostname: localhost
+
+logoutURL: http://localhost:3004/logout
+loggedInSessionURL: http://localhost:3004/loggedInSession
